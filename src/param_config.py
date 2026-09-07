@@ -1,0 +1,1 @@
+#params for stars (velocity, mass, position)
