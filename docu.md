@@ -2,6 +2,11 @@ Dieses Programm wurde beschränkt mit der Hilfe von KI geschrieben und debugged.
 
 
 DOCUMENTATION 
+main.py
+
+
+menu.py
+
 
 
 Natt, Oliver: Physik mit Python, 01.01.2022, [online] doi:10.1007/978-3-662-66454-4.

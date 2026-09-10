@@ -1,6 +1,5 @@
 
-# ! textboxen werden falsch übergeben (überlappen sich) 
-#TODO auswahlmenü entfernen sobald man ausgewählt hat und einen zurück button hinzufügen 
+#TODO auswahlmöglichkeit zwischen einfach und mehrfachsternsystem entfernen wenn man im system drinnen is 
 from matplotlib.widgets import Button, TextBox
 import matplotlib.pyplot as plt
 import numpy as np
@@ -30,11 +29,13 @@ def build_menu(fig):
     button_multiple = Button(axes_button2, "Mehrfachsternsystem")#
 
     def singular_mode(event): 
+        fig.canvas.release_mouse(event.inaxes) #Mausgriff freigeben, sonst funktioniert fig.clear() nicht
         status['mode'] = 'singular'
         status['star_amount'] = 1
         build_menu(fig)
 
     def multiple_mode(event): 
+        fig.canvas.release_mouse(event.inaxes)
         status['mode'] = 'multiple'
         status['star_amount'] = 2 
         build_menu(fig)
@@ -48,73 +49,109 @@ def build_menu(fig):
     elif status['mode'] == 'multiple': 
         build_multiple(fig)
 
+    def return_menu(event):
+            fig.canvas.release_mouse(event.inaxes)
+            status['mode'] = None
+            status['star_amount'] = 1
+            build_menu(fig)
+
+    #return button
+    return_button = Button(fig.add_axes([0.35, 0.05, 0.2, 0.06]), 'Zurück')
+    return_button.on_clicked(return_menu)
+
+    status['references'] += [return_button]
     fig.canvas.draw_idle()
     return fig 
 
-def build_singular(fig): 
-    return fig  # TODO Missing functionalities = placeholder 
 
-def build_multiple(fig): 
-    amount = status['star_amount']
+def build_star(fig, amount): 
+    star_row_y = 0.75
+    textbox = {}
 
-    first_row_y = 0.75 
-
-    textbox = {} 
+    fig.text(0.15, star_row_y + 0.06, "Masse [kg]", fontsize = 10)
+    fig.text(0.32, star_row_y + 0.06, "Position X-Achse [AE]", fontsize = 10)
+    fig.text(0.44, star_row_y + 0.06, "Position Y-Achse [AE]", fontsize = 10)
+    fig.text(0.56, star_row_y + 0.06, "Initialgeschwindigkeit x [m/s]", fontsize = 10)
+    fig.text(0.68, star_row_y + 0.06, "Initialgeschwindigkeit y [m/s]", fontsize = 10)
 
     for i in range(amount): 
-        y = first_row_y - i * row_height
-        fig.text(0.05, y + 0.02, f"Stern {i + 1}", fontsize = 12)
+        y = star_row_y - i * row_height
+        fig.text(0.02, y + 0.02, f"Stern {i +1}", fontsize = 10)
 
-    # Params for stars (initial velocity, mass, position on x/y axis)   
-    ax_mass = fig.add_axes([0.15, y, 0.15, 0.05])
-    box_mass = TextBox(ax_mass, "", initial = "1.0e30kg") #1.0e30kg = 0.2-0.5 SM (solar masses)
+        # Params for stars (initial velocity, mass, position on x/y axis)   
+        ax_mass = fig.add_axes([0.15, y, 0.15, 0.05])
+        box_mass = TextBox(ax_mass, "", initial = "1.0e30") #1.0e30kg = 0.2-0.5 SM (solar masses)
+    
+        ax_x_positon = fig.add_axes([0.32, y , 0.10, 0.05])
+        box_x_position = TextBox(ax_x_positon, "", initial = "0.0")
+    
+        ax_y_position = fig.add_axes([0.44, y, 0.10, 0.05])
+        box_y_position = TextBox(ax_y_position, "", initial = "0.0")
+    
+        ax_x_velocity = fig.add_axes([0.56, y, 0.10, 0.05])
+        box_x_velocity = TextBox(ax_x_velocity, "", initial = "0.0")
+    
+        ax_y_velocity = fig.add_axes([0.68, y, 0.10, 0.05])
+        box_y_velocity = TextBox(ax_y_velocity, "", initial = "0.0")
+    
+        textbox[i] = {
+            'Masse': box_mass,
+            'Position X-Achse': box_x_position,
+            'Position Y-Achse': box_y_position,
+            'Initialgeschwindigkeit x': box_x_velocity,
+            'Initialgeschwindigkeit y': box_y_velocity,
+        }
 
-    ax_x_positon = fig.add_axes([0.15, y, 0.15, 0.05])
-    box_x_position = TextBox(ax_x_positon, "", initial = "0.0")
+        status['references'] += list(textbox[i].values())
 
-    ax_y_position = fig.add_axes([0.15, y, 0.15, 0.05])
-    box_y_position = TextBox(ax_y_position, "", initial = "0.0")
+    return textbox, star_row_y
+def build_singular(fig): 
+    amount = status['star_amount']
+    textbox, star_row_y = build_star(fig, amount)
 
-    ax_x_velocity = fig.add_axes([0.15, y, 0.15, 0.05])
-    box_x_velocity = TextBox(ax_x_velocity, "", initial = "0.0")
+    ax_start = fig.add_axes([0.55, 0.05, 0.2, 0.06])
+    button_start = Button(ax_start, "Starten")
 
-    ax_y_velocity = fig.add_axes([0.15, y, 0.15, 0.05])
-    box_y_velocity = TextBox(ax_y_velocity, "", initial = "0.0")
+    def start(event): 
+        fig.canvas.release_mouse(event.inaxes) #Mausgriff freigeben, sonst funktioniert fig.clear() nicht
+        params = []
+        for i in range(amount):
+            b = textbox[i]
+            params.append({
+                #Data being submitted as a float to simulation to avoid type errors
+                'Masse': float(b['Masse'].text),
+                'Position X-Achse': b['Position X-Achse'].text,
+                'Position Y-Achse': b['Position Y-Achse'].text,
+                'Initialgeschwindigkeit y': b['Initialgeschwindigkeit y'].text,
+                'Initialgeschwindigkeit x': b['Initialgeschwindigkeit x'].text,
+            })
 
-    #ax_x_acceleration = fig.add_axes([0.15, y, 0.15, 0.05])
-    #box_x_acceleration = TextBox(ax_x_acceleration, "ax",initial = "0,.0") 
+        from simulation import simulate_single_star #TODO ADD AMOUNT OF STARS AS PARAM TO SIMULATION FILE (make sure its codependent)
+        from graphen_plotting import show_single_plot 
 
-    #ax_y_acceleration = fig.add_axes([0.15, y, 0.15, 0.05])
-    #box_y_acceleration = TextBox(ax_y_acceleration, "ay", initial = "1.0e30kg")
+        data = simulate_single_star(params)
+        show_single_plot(fig, data)
 
-    textbox[i] = {
-        'Masse': box_mass,
-        'Position X-Achse': box_x_position,
-        'Position Y-Achse': box_y_position,
-        'Initialgeschwindigkeit y': box_x_velocity,
-        'Initialgeschwindigkeit x': box_y_velocity,
-        #'Beschleunigung x': box_x_acceleration,
-        #'Beschleunigung y': box_y_acceleration
-    }
+    button_start.on_clicked(start)
+    status['references'] += [button_start]
 
-    status['references'] += list(textbox[i].values())
+    fig.canvas.draw_idle()
+    return fig 
+def build_multiple(fig): 
+    amount = status['star_amount']
+    textbox, star_row_y = build_star(fig, amount)
 
-    #Row-Descriptors & Units
-    fig.text(0.15, y + 0.02, "Masse in kg", fontsize = 10)
-    fig.text(0.15, y + 0.02, "Position X-Achse [AE]", fontsize = 10)
-    fig.text(0.15, y + 0.02, "Position Y-Achse [AE]", fontsize = 10)
-    fig.text(0.15, y + 0.02, "Initialgeschwindigkeit x [m/s]", fontsize = 10)
-    fig.text(0.15, y + 0.02, "Initialgeschwindigkeit y [m/s]", fontsize = 10)
-    #fig.text(0.15, y + 0.02, "Beschleunigung x [m/s^2]", fontsize = 10)
-    #fig.text(0.15, y + 0.02, "Beschleunigung y [m/s^2]", fontsize = 10)
+    y_assignedToButton = star_row_y - amount * row_height
 
-    y_assignedToButton = y - amount * row_height
-
-    # Button to add star
-    if amount < max_amount_stars: 
-        button_add_star = Button(fig.add_axes([0.15, y_assignedToButton - 0.02, 0.05, 0.05]), 'Stern hinzufügen')
+    #Button Add Star
+    if amount < max_amount_stars:
+        button_add_star = Button(
+            fig.add_axes([0.15, y_assignedToButton - 0.3, 0.15, 0.05]),
+            'Stern hinzufügen'
+        )
 
         def add_star(event): 
+            fig.canvas.release_mouse(event.inaxes)
             status['star_amount'] += 1
             build_menu(fig)
 
@@ -122,12 +159,13 @@ def build_multiple(fig):
         status['references'] += [button_add_star]
 
     else : 
-        fig.text(0.15, y_assignedToButton - 0.02, "Maximale Anzahl von Sternen erreicht", fontsize = 10)
+        fig.text(0.15, y_assignedToButton - 0.02, "Maximale Anzahl an Sternen erreicht", fontsize = 10)
 
-    ax_start = fig.add_axes([0.4, 0.05, 0.02, 0.05])
-    btn_start = Button(ax_start, 'Starten')
+    ax_start = fig.add_axes([0.55, 0.05, 0.2, 0.06])
+    button_start = Button(ax_start, 'Starten')
 
     def start(event): 
+        fig.canvas.release_mouse(event.inaxes) 
         params = []
         for i in range(amount):
             b = textbox[i]
@@ -137,8 +175,6 @@ def build_multiple(fig):
                 'Position Y-Achse': b['Position Y-Achse'].text,
                 'Initialgeschwindigkeit y': b['Initialgeschwindigkeit y'].text,
                 'Initialgeschwindigkeit x': b['Initialgeschwindigkeit x'].text,
-                #'Beschleunigung x': b['Beschleunigung x'].text,
-                #'Beschleunigung y': b['Beschleunigung y'].text
             })
 
         from simulation import simulate_multiple_stars #TODO ADD AMOUNT OF STARS AS PARAM TO SIMULATION FILE (make sure its codependent)
@@ -147,11 +183,10 @@ def build_multiple(fig):
         data = simulate_multiple_stars(params)
         show_multiple_plot(fig, data)
 
-    btn_start.on_clicked(start)
-    status['references'] += [btn_start]
+    button_start.on_clicked(start)
+    status['references'] += [button_start]
 
     fig.canvas.draw_idle()
     return fig
 def main_menu(fig): 
-    
     return build_menu(fig)
