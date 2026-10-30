@@ -1,0 +1,84 @@
+[
+  {
+    "name": "Simulation_1",
+    "timestamp": "2026-10-29T13:50:20",
+    "modus": "singular",
+    "star_params": {
+      "Masse [kg]": 1e+30,
+      "Initialgeschwindigkeit x [m/s]": 0.0,
+      "Initialgeschwindigkeit y [m/s]": 0.0
+    },
+    "planet_params": [
+      {
+        "Masse [kg]": 1e+30,
+        "Position X-Achse [AE]": 0.0,
+        "Position Y-Achse [AE]": 0.0,
+        "Initialgeschwindigkeit x [m/s]": 0.0,
+        "Initialgeschwindigkeit y [m/s]": 0.0
+      }
+    ]
+  },
+  {
+    "name": "Simulation_2",
+    "timestamp": "2026-10-29T15:34:45",
+    "modus": "singular",
+    "star_params": {
+      "mass": 1e+30,
+      "velocity_x": 0.0,
+      "velocity_y": 0.0
+    },
+    "planet_params": [
+      {
+        "mass": 1e+30,
+        "position_x": 0.0,
+        "position_y": 0.0,
+        "velocity_x": 0.0,
+        "velocity_y": 0.0
+      }
+    ]
+  },
+  {
+    "name": "Simulation_3",
+    "timestamp": "2026-10-29T15:39:48",
+    "modus": "multiple",
+    "star_params": [
+      {
+        "mass": 1e+30,
+        "position_x": 0.0,
+        "position_y": 0.0,
+        "velocity_x": 0.0,
+        "velocity_y": 0.0
+      },
+      {
+        "mass": 1e+30,
+        "position_x": 0.0,
+        "position_y": 0.0,
+        "velocity_x": 0.0,
+        "velocity_y": 0.0
+      }
+    ],
+    "planet_params": []
+  },
+  {
+    "name": "Simulation_4",
+    "timestamp": "2026-10-29T15:42:59",
+    "modus": "singular",
+    "star_params": {
+      "mass": 1e+30,
+      "velocity_x": 0.0,
+      "velocity_y": 0.0
+    },
+    "planet_params": []
+  },
+  {
+    "name": "Simulation_5",
+    "timestamp": "2026-10-29T19:45:18",
+    "modus": "singular",
+    "star_params": {
+      "mass": 1e+30,
+      "velocity_x": 0.0,
+      "velocity_y": 0.0
+    },
+    "planet_params": []
+  }
+]

@@ -11,4 +11,3 @@ menu.py
 
 Natt, Oliver: Physik mit Python, 01.01.2022, [online] doi:10.1007/978-3-662-66454-4.
 Leersch, Oliver: Das N-Körper Problem. Eine approximative Lösung mit Python.,   		 Masterarbeit, Karl-Franzens Universität Graz, 2018, [online] https://unipub.uni-	graz.at/obvugrhs/2581338.
- 

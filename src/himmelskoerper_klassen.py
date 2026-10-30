@@ -1,31 +1,41 @@
-import math 
+import numpy as np
+
+G = 6.6743e-11
+
 
 class CelestialBody:
-    def __init__(self, name, mass, x, y, vx, vy, radius, color):
+    def __init__(self, name, mass, r0, v0, color = 'gray'):
         self.name = name
         self.mass = mass
-        self.x = x
-        self.y = y
-        self.vx = vx
-        self.vy = vy
-        self.radius = radius
-        self.color = color
+        self.r = np.array(r0, dtype = float)
+        self.v = np.array(v0, dtype = float)
+        self.color = color 
+
+        self.r_history = None
+        self.v_history = None
 
     def distance_to(self, other):
-        return math.sqrt((self.x - other.x)**2 + (self.y - other.y)**2)
+        #Euklidischer Abstand
+        return np.linalg.norm(self.r - other.r)
     
-    def apply_force(self, other, dt, G=6.67e-11):
-        d = self.distance_to(other)
-        if d == 0:
-            return
-        
-        f = G * self.mass * other.mass / (d**2)
-        fx = f * (other.x - self.x) / d
-        fy = f * (other.y - self.y) / d
-        
-        self.vx += fx / self.mass * dt
-        self.vy += fy / self.mass * dt
+    def apply_force(self, other):
+        difference = other.r - self.r #Vektor pointing to other body
+        distance = np.linalg.norm(difference)
+        if distance == 0:
+            return np.zeros(2)
+        return G * self.mass * other.mass / distance**2 * (difference / distance)
+
+    def acceleration(self, other): 
+        #Beschleunigung m/s^2 - von anderen auf sich selbst 
+        return self.apply_force(other) / self.mass
+
+    def total_acceleration(self, all_bodies): 
+        a = np.zeros(2)
+        for other in all_bodies: 
+            if other is self: 
+                continue 
+            a += self.acceleration(other)
+        return a
     
-    def update_position(self, dt):
-        self.x += self.vx * dt
-        self.y += self.vy * dt
+    def __repr__(self): 
+        return f"CelestialBody({self.name!r}, masse={self.mass:.2e})"
