@@ -268,9 +268,9 @@ def replay_simulation(fig, listing):
     from graphen_plotting import show_simulation_plot
 
     if listing['mode'] == 'singular': 
-        data = simulate_single_star(listing['star_params'][0], verlauf['planet_params'], verlauf['name'])
+        data = simulate_single_star(listing['star_params'][0], listing['planet_params'], listing['name'])
     else: 
-        data = simulate_multiple_stars(listing['star_params'], verlauf['name'])
+        data = simulate_multiple_stars(listing['star_params'], listing['name'])
 
     show_simulation_plot(data)
 
