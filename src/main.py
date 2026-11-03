@@ -1,4 +1,3 @@
-#menu.py IMPORTS
 import matplotlib.pyplot as plt
 from menu import main_menu
 

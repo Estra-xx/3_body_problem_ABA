@@ -36,7 +36,7 @@ def differential_equation(t, u, bodies, masses):
     return np.concatenate([velocities.flatten(), accelerations.flatten()])
 
 
-def start_nbody_simulation(bodies, t_end= 60* 60 * 24 * 365 * 5, steps= 1000, simulation_name = None):
+def start_nbody_simulation(bodies, t_end= 60* 60 * 24 * 365 * 25, steps= 10000, simulation_name = None):
     n = len(bodies)
     masses = np.array([b.mass for b in bodies])
 

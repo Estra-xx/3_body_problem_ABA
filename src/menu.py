@@ -34,7 +34,7 @@ def build_menu(fig):
         button_multiple = Button(axes_button2, "Mehrfachsternsystem") 
 
         axes_button3 = fig.add_axes([0.35, 0.72, 0.3, 0.08])
-        button_verlauf = Button(axes_button3, "Verlauf")
+        button_listing = Button(axes_button3, "Verlauf")
 
         def singular_mode(event): 
             fig.canvas.release_mouse(event.inaxes) #Mausgriff freigeben, sonst funktioniert fig.clear() nicht
@@ -51,13 +51,13 @@ def build_menu(fig):
 
         def verlauf_mode(event):
             fig.canvas.release_mouse(event.inaxes)
-            status['mode'] = 'verlauf'
+            status['mode'] = 'listing'
             build_menu(fig)
             
         button_singular.on_clicked(singular_mode)
         button_multiple.on_clicked(multiple_mode)
-        button_verlauf.on_clicked(verlauf_mode)
-        status['references'] += [button_singular, button_multiple, button_verlauf]
+        button_listing.on_clicked(verlauf_mode)
+        status['references'] += [button_singular, button_multiple, button_listing]
 
     if status['mode'] == 'singular': 
         build_singular(fig)
@@ -247,19 +247,27 @@ def build_multiple(fig):
         fig.canvas.release_mouse(event.inaxes) 
         star_params = [read_fields(star_fields[i]) for i in range(amount)]
         simulation_name = name_field.text.strip() or param_config.next_standardname()
-      
-        from simulation import simulate_multiple_stars 
-        from graphen_plotting import show_simulation_plot 
+
+        positions = [(p['position_x'], p['position_y']) for p in star_params]
+        if len (set(positions)) < len(positions):
+            print("Startwerte von den Sternen sollen unterschiedlich sein - sonst läuft Epot gegen die Unendlichkeit.")
+            return
+
+        from simulation import simulate_multiple_stars
+        from graphen_plotting import show_simulation_plot
 
         param_config.save_simulation(simulation_name, 'multiple', star_params)
 
-
-        data = simulate_multiple_stars(star_params, simulation_name)
+        try: 
+            data = simulate_multiple_stars(star_params, simulation_name)
+        except RuntimeError as e: 
+            print("Simulation konnte nicht gestartet werden - kollabiert sofort. Sterne brauchen Startgeschwindigkeiten.")
+            return
+        
         show_simulation_plot(data)
 
     button_start.on_clicked(start)
     status['references'] += [button_start]
-
     fig.canvas.draw_idle()
     return fig
 

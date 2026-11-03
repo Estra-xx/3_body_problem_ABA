@@ -80,5 +80,199 @@
       "velocity_y": 0.0
     },
     "planet_params": []
+  },
+  {
+    "name": "Simulation_6",
+    "timestamp": "2026-10-30T23:20:33",
+    "modus": "singular",
+    "star_params": {
+      "mass": 1e+30,
+      "velocity_x": 0.0,
+      "velocity_y": 0.0
+    },
+    "planet_params": []
+  },
+  {
+    "name": "Simulation_6",
+    "timestamp": "2026-10-30T23:20:36",
+    "modus": "singular",
+    "star_params": {
+      "mass": 1e+30,
+      "velocity_x": 0.0,
+      "velocity_y": 0.0
+    },
+    "planet_params": []
+  },
+  {
+    "name": "Simulation_6",
+    "timestamp": "2026-10-30T23:20:42",
+    "modus": "singular",
+    "star_params": {
+      "mass": 1e+30,
+      "velocity_x": 0.0,
+      "velocity_y": 0.0
+    },
+    "planet_params": []
+  },
+  {
+    "name": "Simulation_6",
+    "timestamp": "2026-10-30T23:20:43",
+    "modus": "singular",
+    "star_params": {
+      "mass": 1e+30,
+      "velocity_x": 0.0,
+      "velocity_y": 0.0
+    },
+    "planet_params": []
+  },
+  {
+    "name": "Simulation_10",
+    "timestamp": "2026-11-01T22:38:10",
+    "modus": "singular",
+    "star_params": {
+      "mass": 1e+30,
+      "velocity_x": 0.0,
+      "velocity_y": 0.0
+    },
+    "planet_params": []
+  },
+  {
+    "name": "Simulation_10",
+    "timestamp": "2026-11-01T22:44:17",
+    "modus": "singular",
+    "star_params": {
+      "mass": 1.989e+30,
+      "velocity_x": 0.0,
+      "velocity_y": 0.0
+    },
+    "planet_params": []
+  },
+  {
+    "name": "Simulation_10",
+    "timestamp": "2026-11-01T22:45:52",
+    "modus": "singular",
+    "star_params": {
+      "mass": 1e+30,
+      "velocity_x": 0.0,
+      "velocity_y": 0.0
+    },
+    "planet_params": []
+  },
+  {
+    "name": "Simulation_10",
+    "timestamp": "2026-11-01T22:46:24",
+    "modus": "singular",
+    "star_params": {
+      "mass": 3e+30,
+      "velocity_x": 0.0,
+      "velocity_y": 0.0
+    },
+    "planet_params": []
+  },
+  {
+    "name": "Simulation_14",
+    "timestamp": "2026-11-01T22:47:04",
+    "modus": "multiple",
+    "star_params": [
+      {
+        "mass": 1.989e+30,
+        "position_x": 0.0,
+        "position_y": 0.0,
+        "velocity_x": 0.0,
+        "velocity_y": 0.0
+      },
+      {
+        "mass": 3e+30,
+        "position_x": 3.0,
+        "position_y": 5.0,
+        "velocity_x": 3.0,
+        "velocity_y": 2.0
+      }
+    ],
+    "planet_params": []
+  },
+  {
+    "name": "Simulation_15",
+    "timestamp": "2026-11-01T22:50:01",
+    "modus": "singular",
+    "star_params": {
+      "mass": 1.989e+30,
+      "velocity_x": 0.0,
+      "velocity_y": 0.0
+    },
+    "planet_params": []
+  },
+  {
+    "name": "Simulation_16",
+    "timestamp": "2026-11-01T22:50:29",
+    "modus": "multiple",
+    "star_params": [
+      {
+        "mass": 1e+30,
+        "position_x": 0.0,
+        "position_y": 0.0,
+        "velocity_x": 0.0,
+        "velocity_y": 0.0
+      },
+      {
+        "mass": 1e+30,
+        "position_x": 0.0,
+        "position_y": 0.0,
+        "velocity_x": 0.0,
+        "velocity_y": 0.0
+      },
+      {
+        "mass": 1e+30,
+        "position_x": 0.0,
+        "position_y": 0.0,
+        "velocity_x": 0.0,
+        "velocity_y": 0.0
+      }
+    ],
+    "planet_params": []
+  },
+  {
+    "name": "Simulation_17",
+    "timestamp": "2026-11-03T22:30:16",
+    "modus": "multiple",
+    "star_params": [
+      {
+        "mass": 1e+30,
+        "position_x": 5.0,
+        "position_y": 3.0,
+        "velocity_x": 0.0,
+        "velocity_y": 0.0
+      },
+      {
+        "mass": 1e+30,
+        "position_x": 3.0,
+        "position_y": 2.0,
+        "velocity_x": 0.0,
+        "velocity_y": 0.0
+      }
+    ],
+    "planet_params": []
+  },
+  {
+    "name": "Simulation_18",
+    "timestamp": "2026-11-03T22:37:27",
+    "modus": "multiple",
+    "star_params": [
+      {
+        "mass": 1e+30,
+        "position_x": 5.0,
+        "position_y": 3.0,
+        "velocity_x": 3.0,
+        "velocity_y": 5.0
+      },
+      {
+        "mass": 1e+30,
+        "position_x": 50.0,
+        "position_y": 30.0,
+        "velocity_x": 30.0,
+        "velocity_y": 50.0
+      }
+    ],
+    "planet_params": []
   }
 ]
